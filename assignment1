@@ -1,0 +1,38 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+data = pd.read_csv('sales_data.csv')
+# Display the first few rows of the dataset
+print(data.head())
+
+# Get summary statistics of numeric columns
+print(data.describe())
+
+# Check for missing values
+print(data.isnull().sum())
+
+# Count unique values in a categorical column
+print(data['product_category'].value_counts())
+data['sales_amount'].fillna(data['sales_amount'].mean(), inplace=True)
+# Histogram of sales_amount
+plt.hist(data['sales_amount'], bins=20, edgecolor='k')
+plt.xlabel('Sales Amount')
+plt.ylabel('Frequency')
+plt.title('Distribution of Sales Amount')
+plt.show()
+
+# Box plot of sales_amount by product_category
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='product_category', y='sales_amount', data=data)
+plt.xlabel('Product Category')
+plt.ylabel('Sales Amount')
+plt.title('Box Plot of Sales Amount by Product Category')
+plt.xticks(rotation=45)
+plt.show()
+
+# Correlation heatmap of numeric columns
+corr_matrix = data.corr()
+plt.figure(figsize=(8, 6))
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm')
+plt.title('Correlation Heatmap')
+plt.show()
